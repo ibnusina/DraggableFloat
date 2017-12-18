@@ -10,25 +10,32 @@
 
 @implementation BRDDraggableFloat
 
-+ (BRDDraggableFloat *)sharedInstance
-{
-    static BRDDraggableFloat *sharedInstance;
-    static dispatch_once_t onceToken;
-    
-    dispatch_once(&onceToken, ^{
-        if(sharedInstance == nil) {
-            sharedInstance = [[BRDDraggableFloat alloc] init];
-        }
-    });
-    return sharedInstance;
-}
-
 - (BRDDraggableFLoatWindow *)window
 {
     if (!_window) {
         _window = [[BRDDraggableFLoatWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     }
     return _window;
+}
+
+- (void)show:(BOOL)show
+{
+    self.window.hidden = !show;
+}
+
+- (void)addView:(UIView *)view
+{
+    [self.window addView:view];
+}
+
+- (void)removeView:(UIView *)view
+{
+    [self.window removeView:view];
+}
+
+- (void)removeAllViews
+{
+    [self.window removeAllViews];
 }
 
 @end

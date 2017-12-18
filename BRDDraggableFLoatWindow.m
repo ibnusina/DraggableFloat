@@ -10,7 +10,7 @@
 
 @interface BRDDraggableFLoatWindow()
 
-@property (nonatomic, strong) UIViewController *overlayViewController;
+@property (nonatomic, strong) NSMutableArray *items;
 
 @end
 
@@ -22,17 +22,39 @@
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         self.windowLevel = UIWindowLevelNormal;
-        self.rootViewController = self.overlayViewController;
     }
     return self;
 }
 
-- (UIViewController *)overlayViewController
+- (void)addView:(UIView *)view
 {
-    if (!_overlayViewController) {
-        _overlayViewController = [[UIViewController alloc] init];
+    [self addSubview:view];
+}
+
+- (void)removeView:(UIView *)view
+{
+    [view removeFromSuperview];
+}
+
+- (void)removeAllViews
+{
+    for (UIView *view in self.subviews) {
+        [self removeView:view];
     }
-    return _overlayViewController;
+}
+
+#pragma mark - overrided function
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+{
+    for (UIView *view in self.subviews) {
+        CGRect rect = [self convertRect:view.frame fromWindow:self];
+        BOOL contained = CGRectContainsPoint(rect, point);
+        if (contained) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 

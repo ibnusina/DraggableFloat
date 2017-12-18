@@ -10,6 +10,8 @@
 
 @interface BRDDraggableFLoatWindow: UIWindow
 
-
+- (void)addView:(UIView *)view;
+- (void)removeView:(UIView *)view;
+- (void)removeAllViews;
 
 @end
