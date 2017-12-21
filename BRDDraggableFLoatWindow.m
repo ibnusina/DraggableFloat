@@ -47,6 +47,9 @@
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
+    if (self.hidden) {
+        return NO;
+    }
     for (UIView *view in self.subviews) {
         CGRect rect = [self convertRect:view.frame fromWindow:self];
         BOOL contained = CGRectContainsPoint(rect, point);
